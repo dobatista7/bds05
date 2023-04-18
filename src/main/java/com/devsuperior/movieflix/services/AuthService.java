@@ -30,6 +30,14 @@ public class AuthService {
 	}
 	
 	
+	public void validateSelfOrProfile(String username) {
+		User user = authenticated();
+		if(!user.getUsername().equals(username)) {
+			throw new ForbiddenException("Access denied");
+		}
+		
+	}
+	
 	public void validateSelfOrAdmin(Long userId) {
 		User user = authenticated();
 		if(!user.getId().equals(userId)) {

@@ -1,9 +1,13 @@
 package com.devsuperior.movieflix.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -12,41 +16,45 @@ import com.devsuperior.movieflix.entities.pk.ReviewPK;
 
 @Entity
 @Table(name = "tb_review")
-public class Review {
+public class Review implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
-	private static final ReviewPK ReviewPK = null;
-
-	@EmbeddedId
-	private ReviewPK id = new ReviewPK();
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
+	@Column(columnDefinition = "TEXT")
 	private String text;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id", insertable = false, updatable = false)
-	private User user; 
 	
 	@ManyToOne
-	@JoinColumn(name="movie_id", insertable = false, updatable = false)
+	@JoinColumn(name = "movie_id")
 	private Movie movie;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user; 
+	
+	
 	
 	public Review() {
 		
 	}
 
-	public Review(ReviewPK id, String text, User user, Movie movie) {
-		super();
+	public Review(Long id, String text, User user, Movie movie) {
 		this.id = id;
 		this.text = text;
 		this.user = user;
 		this.movie = movie;
 	}
 
-	public ReviewPK getId() {
+	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
-		this.id = ReviewPK;
+		this.id = id;
 	}
 
 	public String getText() {
@@ -89,9 +97,5 @@ public class Review {
 		Review other = (Review) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-		
-	
-	
-		
+			
 }

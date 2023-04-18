@@ -31,8 +31,7 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private AuthService authService;
 	
-		
-	
+			
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 		
@@ -43,11 +42,10 @@ public class UserService implements UserDetailsService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<UserDTO> findAllPaged(Pageable pageable){
-		Page<User> list = repository.findAll(pageable);
-		return list.map(x -> new UserDTO(x));	
-		
+	public UserDTO getProfile() {
+		return new UserDTO(authService.authenticated());		
 	}
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

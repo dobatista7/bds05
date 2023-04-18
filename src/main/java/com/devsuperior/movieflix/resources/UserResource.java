@@ -19,6 +19,7 @@ public class UserResource {
 	@Autowired
 	private  UserService service;
 	
+	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
 		
@@ -27,13 +28,12 @@ public class UserResource {
 	
 	}
 	
-	@GetMapping(value = "/profile")
-	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+	
+	@GetMapping(value = "/profile")	
+	public ResponseEntity<UserDTO> getProfile() {
 		
-		Page<UserDTO> list = service.findAllPaged(pageable);
-		return ResponseEntity.ok().body(list);
+		UserDTO dto = service.getProfile();
+		return ResponseEntity.ok(dto);
 	}
 	
-	
-
 }
